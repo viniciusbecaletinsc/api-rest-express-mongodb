@@ -33,4 +33,19 @@ app.post("/livros", (req, res) => {
   return res.sendStatus(201)
 })
 
+app.put("/livros/:id", (req, res) => {
+  const { id } = req.params
+  const { title } = req.body
+
+  const livro = MOCK_LIVROS.find(livro => livro.id === Number(id))
+
+  if (!livro) {
+    return res.sendStatus(404)
+  }
+
+  livro.title = title
+
+  return res.json(livro)
+})
+
 app.listen(port, () => console.log(`Server is running on port ${port}`))

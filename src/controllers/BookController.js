@@ -22,7 +22,7 @@ export class BookController {
 
   async update(req, res) {
     const { id } = req.params
-    const { title } = req.body
+    const { title, author, price, pages } = req.body
 
     const book = await Book.findById(id)
 
@@ -30,7 +30,14 @@ export class BookController {
       return res.sendStatus(404)
     }
 
-    await Book.updateOne({ _id: id }, { title })
+    const bookData = {
+      title: title || book.title,
+      author: author || book.author,
+      price: price || book.price,
+      pages: pages || book.pages
+    }
+
+    await Book.updateOne({ _id: id }, bookData)
 
     return res.sendStatus(204)
   }

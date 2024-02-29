@@ -8,6 +8,18 @@ export class BookController {
     return res.json(books)
   }
 
+  async show(req, res) {
+    const { id } = req.params
+
+    const book = await Book.findById(id)
+
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' })
+    }
+
+    return res.json(book)
+  }
+
   async store(req, res) {
     const { title, price, pages, authorId } = req.body
 

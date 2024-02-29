@@ -8,11 +8,10 @@ export class BookController {
   }
 
   async store(req, res) {
-    const { title, author, price, pages } = req.body
+    const { title, price, pages } = req.body
 
     await Book.create({
       title,
-      author,
       price,
       pages
     })
@@ -22,7 +21,7 @@ export class BookController {
 
   async update(req, res) {
     const { id } = req.params
-    const { title, author, price, pages } = req.body
+    const { title, price, pages } = req.body
 
     const book = await Book.findById(id)
 
@@ -32,7 +31,6 @@ export class BookController {
 
     const bookData = {
       title: title || book.title,
-      author: author || book.author,
       price: price || book.price,
       pages: pages || book.pages
     }

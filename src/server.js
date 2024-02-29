@@ -1,4 +1,15 @@
 import express from 'express'
+import { connection } from './database/config.js'
+
+const database = await connection()
+
+database.on('error', (error) => {
+  console.error('Connection to database failed', error)
+})
+
+database.once('open', () => {
+  console.log('Connection to database established')
+})
 
 const app = express()
 const port = 3000

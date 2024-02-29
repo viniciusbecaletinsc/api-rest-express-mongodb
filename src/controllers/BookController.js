@@ -2,8 +2,12 @@ import { Author } from "../models/Author.js"
 import { Book } from "../models/Book.js"
 
 export class BookController {
-  async index(_, res) {
-    const books = await Book.find({})
+  async index(req, res) {
+    const { query = "" } = req.query
+
+    const books = await Book.find({
+      title: new RegExp(query, 'i')
+    })
 
     return res.json(books)
   }

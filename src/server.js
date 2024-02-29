@@ -6,7 +6,7 @@ const port = 3000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const MOCK_LIVROS = [
+let MOCK_LIVROS = [
   {
     id: 1,
     title: "O Senhor dos Anéis"
@@ -46,6 +46,20 @@ app.put("/livros/:id", (req, res) => {
   livro.title = title
 
   return res.json(livro)
+})
+
+app.delete("/livros/:id", (req, res) => {
+  const { id } = req.params
+
+  const livro = MOCK_LIVROS.find(livro => livro.id === Number(id))
+
+  if (!livro) {
+    return res.sendStatus(404)
+  }
+
+  MOCK_LIVROS = MOCK_LIVROS.filter(livro => livro.id !== Number(id))
+
+  return res.sendStatus(204)
 })
 
 app.listen(port, () => console.log(`Server is running on port ${port}`))

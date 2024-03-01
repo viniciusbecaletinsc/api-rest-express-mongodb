@@ -1,5 +1,6 @@
 import { Author } from "../models/Author.js"
 import { Book } from "../models/Book.js"
+import { AppError } from "../utils/AppError.js"
 
 export class BookController {
   async index(req, res) {

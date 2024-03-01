@@ -7,15 +7,15 @@ const bookSchema = new mongoose.Schema({
   },
   title: {
     type: mongoose.Schema.Types.String,
-    required: true
+    required: [true, "O campo 'title' é obrigatório"]
   },
   price: {
     type: mongoose.Schema.Types.Number,
-    required: true
+    required: [true, "O campo 'price' é obrigatório"]
   },
   pages: {
     type: mongoose.Schema.Types.Number,
-    required: true
+    required: [true, 'O número de páginas do livro é obrigatório']
   },
   author: authorSchema
 }, {

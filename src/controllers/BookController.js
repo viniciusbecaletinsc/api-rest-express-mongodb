@@ -18,7 +18,7 @@ export class BookController {
     const book = await Book.findById(id)
 
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' })
+      throw new AppError(404, 'Book not found')
     }
 
     return res.json(book)
@@ -50,7 +50,7 @@ export class BookController {
     const book = await Book.findById(id)
 
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' })
+      throw new AppError(404, 'Book not found')
     }
 
     let author
@@ -59,7 +59,7 @@ export class BookController {
       author = await Author.findById(authorId)
 
       if (!author) {
-        return res.status(404).json({ message: 'Author not found' })
+        throw new AppError(404, 'Author not found')
       }
     }
 
@@ -81,7 +81,7 @@ export class BookController {
     const book = await Book.findById(id)
 
     if (!book) {
-      return res.sendStatus(404)
+      throw new AppError(404, 'Book not found')
     }
 
     await Book.deleteOne({ _id: id })

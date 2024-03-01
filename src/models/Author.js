@@ -6,7 +6,7 @@ export const authorSchema = new mongoose.Schema({
   },
   name: {
     type: mongoose.Schema.Types.String,
-    required: true
+    required: [true, 'O nome do autor é obrigatório'],
   }
 })
 

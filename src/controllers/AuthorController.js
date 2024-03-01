@@ -1,4 +1,5 @@
 import { Author } from "../models/Author.js"
+import { AppError } from '../utils/AppError.js'
 
 export class AuthorController {
   async index(_, res) {
@@ -24,7 +25,7 @@ export class AuthorController {
     const author = await Author.findById(id)
 
     if (!author) {
-      return res.sendStatus(404)
+      throw new AppError(404, 'Author not found')
     }
 
     const authorData = {
@@ -42,7 +43,7 @@ export class AuthorController {
     const author = await Author.findById(id)
 
     if (!author) {
-      return res.sendStatus(404)
+      throw new AppError(404, 'Author not found')
     }
 
     await Author.deleteOne({ _id: id })

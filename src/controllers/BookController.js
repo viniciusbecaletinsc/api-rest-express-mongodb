@@ -4,11 +4,26 @@ import { AppError } from "../utils/AppError.js"
 
 export class BookController {
   async index(req, res) {
-    const { query = "" } = req.query
+    const { query = "", minPages = 0, maxPages = null } = req.query
 
-    const books = await Book.find({
-      title: new RegExp(query, 'i')
-    })
+    const queryOptions = {
+      title: {
+        $regex: query,
+      },
+      pages: {
+        $gte: minPages,
+      },
+    }
+
+    if (maxPages) {
+      if (Number(minPages) > Number(maxPages)) {
+        throw new AppError(400, "A quantidade mínima não pode ser maior que a quantidade máxima")
+      }
+
+      queryOptions.pages.$lte = maxPages
+    }
+
+    const books = await Book.find(queryOptions)
 
     return res.json(books)
   }

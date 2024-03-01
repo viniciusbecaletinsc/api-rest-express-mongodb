@@ -4,7 +4,12 @@ import { AppError } from "../utils/AppError.js"
 
 export class BookController {
   async index(req, res) {
-    const { query = "", minPages = 0, maxPages = null, authorName = "" } = req.query
+    const { query = "", minPages = 0, maxPages = null, authorName = "", page = 1 } = req.query
+    const limitPerPage = 3
+
+    if (page < 1) {
+      throw new AppError(400, "Página inválida")
+    }
 
     const queryOptions = {
       title: {
@@ -26,7 +31,7 @@ export class BookController {
       queryOptions.pages.$lte = maxPages
     }
 
-    const books = await Book.find(queryOptions)
+    const books = await Book.find(queryOptions).skip((page - 1) * limitPerPage).limit(limitPerPage)
 
     return res.json(books)
   }

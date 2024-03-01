@@ -34,5 +34,8 @@ app.use((error, _, res, next) => {
   
   return res.status(500).json({ message: 'Internal server error' })
 })
+app.use((_, res) => {
+  return res.status(404).json({ message: 'Route not found' })
+})
 
 app.listen(port, () => console.log(`Server is running on port ${port}`))

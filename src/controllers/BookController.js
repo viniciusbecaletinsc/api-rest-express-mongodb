@@ -4,7 +4,7 @@ import { AppError } from "../utils/AppError.js"
 
 export class BookController {
   async index(req, res) {
-    const { query = "", minPages = 0, maxPages = null } = req.query
+    const { query = "", minPages = 0, maxPages = null, authorName = "" } = req.query
 
     const queryOptions = {
       title: {
@@ -13,6 +13,9 @@ export class BookController {
       pages: {
         $gte: minPages,
       },
+      "author.name": {
+        $regex: authorName,
+      }
     }
 
     if (maxPages) {

@@ -15,7 +15,8 @@ const bookSchema = new mongoose.Schema({
   },
   pages: {
     type: mongoose.Schema.Types.Number,
-    required: [true, 'O número de páginas do livro é obrigatório']
+    required: [true, 'O número de páginas do livro é obrigatório'],
+    min: [1, 'O livro deve ter no mínimo 1 página'],
   },
   author: authorSchema
 }, {
